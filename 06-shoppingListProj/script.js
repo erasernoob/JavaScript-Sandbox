@@ -3,6 +3,8 @@ const itemInput = document.getElementById('item-input')
 const itemList = document.getElementById('item-list')
 const clearBtn = document.getElementById('clear')
 const filterInput = document.getElementById('filter')
+const formBtn = itemForm.querySelector('button')
+let isEditMode = false
 
 function fitlerItem(e) {
     const text = e.target.value.toLowerCase()
@@ -24,11 +26,30 @@ function onClickItem(e) {
     if (e.target.parentElement.classList.contains('remove-item')) {
         console.log('in')
         removeItem(e.target.parentElement.parentElement)
+        checkUI()
+    } else {
+        setItemToEdit(e.target)
     }
-    checkUI()
 }
 
+function setItemToEdit(item) {
+
+    itemList
+        .querySelectorAll('li')
+        .forEach((e) => e.classList.remove('edit-mode'))
+
+
+    isEditMode = true
+    item.classList.add('edit-mode')
+    formBtn.innerHTML = '<i class="fa-solid fa-pen"><i/>    Update Item'
+    formBtn.style.backgroundColor = '#228B22'
+    itemInput.value = item.textContent
+} 
+
+
+
 function removeItemFromStorage(item) {
+
     const text = item.firstChild.textContent
     let items = getItemsFromStorage()
     const newItems = items.filter((e) => e !== text)
@@ -112,6 +133,11 @@ function addItemToStorage(item) {
     localStorage.setItem('items', JSON.stringify(itemsFromStorage))
 }
 
+function checkDublicate(text) {
+    let itemsFromLocalstorage = getItemsFromStorage()
+    return itemsFromLocalstorage.includes(text)
+}
+
 function onAddItemSubmit(e) {
     e.preventDefault()
     const newItem = itemInput.value
@@ -119,6 +145,23 @@ function onAddItemSubmit(e) {
         alert('Please add an item!')
         return
     } 
+    
+    // check if is the edit mode 
+    if (isEditMode) {
+        const itemToEdit = itemList.querySelector('.edit-mode')
+        removeItemFromStorage(itemToEdit)
+        itemToEdit.classList.remove('edit-mode')
+        itemToEdit.remove()
+        isEditMode = false
+    }
+    if(checkDublicate(newItem)) {
+        alert('Can\'t add a dublicate item !')
+        checkUI()
+        return 
+    }
+
+
+
     addItemToDOM(newItem)
 
     addItemToStorage(newItem)
@@ -128,6 +171,7 @@ function onAddItemSubmit(e) {
 }
 
 function checkUI() {
+    itemInput.value = ''
     const items = itemList.querySelectorAll('li')
     if (items.length === 0) {
         clearBtn.style.display = 'none'
@@ -136,6 +180,9 @@ function checkUI() {
         clearBtn.style.display = 'block'
         filterInput.style.display = 'block'
     }
+    isEditMode = false
+    formBtn.innerHTML = '<i class="fa=solid fa-plus"></i> Add Item'
+    formBtn.style.backgroundColor = '#333'
 }
 
 function disPlayItems() {
