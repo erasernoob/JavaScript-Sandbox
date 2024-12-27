@@ -1,7 +1,7 @@
 import axios from 'axios'
 export default new class IdeasApi {
     constructor() {
-        this._apiUrl = "http://localhost:5000/api/ideas"
+        this._apiUrl = ""
     }
 
     getIdeas() {

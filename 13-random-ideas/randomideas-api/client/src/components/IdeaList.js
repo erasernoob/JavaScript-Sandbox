@@ -74,7 +74,6 @@ export default class IdeaList {
             const tag = this.getTagClass(idea.tag)
             return `
               <div class="card" data-id=${idea._id} >
-                <button class="delete"><i class="fas fa-times"></i></button>
             <h3>${idea.text}</h3>
           <p class="tag ${tag}">${idea.tag}</p>
           <p>
