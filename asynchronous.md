@@ -25,3 +25,34 @@ To sovle the Callback hell(can't the approprite order of the result)
 ## fetch 
 Under the fetch hood, is the **Promise**.
 
+## Module & Tooling
+### Module Bundler
+> Is a toll that takes all of the source code, multiple files and bundlers them together to single build Files like `bundle.js`
+- plugins
+- loaders (css.loader)
+It is the those framwork use under the hood
+- import the css loader
+```
+npm i -D css-loader style-loader
+```
+- install the html-plugin
+`npm i -D html-webpack-plugin`
+- install the webpack-dev-server to hot load
+- install the bubble to transpile the modern JS to much older version JS to be compatible with the older browser 
+
+
+### ES module & commonjs SYNTAX
+- ES module (will not allowed to use in the node environment ~~need additional configuration~~) only works in front end 
+- common js (will allowed to use in the backend environment)
+## Node.js
+USE NPM need to install the node.js
+Node is a javaScript runtime environment RUN ON THE SERVER SIDE.
+There is node Window or Document in Node.
+Node use the V8 engine.
+
+- npm i -D nodemon # as the devDependency(development environment)
+
+
+
+
+
